@@ -1,0 +1,1779 @@
+select distinct name,age from student;
+
+insert into student values
+(180103020011,'Rudro','Sylhet','Male'),
+(180103020017,'Samia','Sylhet','Female'),
+(180103020023,'Tonoya','Gulapgonj','Female'),
+(180103020025,'Rejwana','Sylhet','Female'),
+(180103020005,'Khadija','Moulovibazar','Female'),
+(180103020035,'Fatema','Jakigonj','Female'),
+(170303020001,'Rimu','Tangail','Female'),
+(170303020006,'Rabbi','Tangail','Male'),
+(170303020008,'Marjana','Gulapgonj','Female'),
+(180103020043,'Kamrul','Bishwanath','Male'),
+(180103020031,'Sonjib','Sylhet','Male'),
+(180103020041,'Abdullah','Beanibazar','Male'),
+(180103020055,'Abdullah','Chatok','Male');
+
+-----------------------------------------------
+Setting environment for using XAMPP for Windows.
+User-PC@DESKTOP-UJ43265 c:\xampp
+# mysql -h localhost -u root -p
+Enter password:
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 1
+Server version: 5.6.21 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2014, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| cdcol              |
+| mysql              |
+| neub               |
+| performance_schema |
+| phpmyadmin         |
+| shop               |
+| test               |
+| university         |
+| webauth            |
++--------------------+
+10 rows in set (0.02 sec)
+
+mysql> use neub;
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_neub |
++----------------+
+| student        |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> desc student;
++------------+-------------------------------+------+-----+-----------+-------+
+| Field      | Type                          | Null | Key | Default   | Extra |
++------------+-------------------------------+------+-----+-----------+-------+
+| student_id | bigint(12)                    | NO   | PRI | 0         |       |
+| name       | varchar(30)                   | NO   | PRI |           |       |
+| address    | varchar(250)                  | YES  |     | Not Given |       |
+| dob_year   | year(4)                       | NO   |     | NULL      |       |
+| age        | int(2)                        | YES  | UNI | NULL      |       |
+| gender     | enum('Male','Female','Other') | NO   |     | NULL      |       |
++------------+-------------------------------+------+-----+-----------+-------+
+6 rows in set (0.02 sec)
+
+mysql> select * from student;
++--------------+-----------+-----------+----------+------+--------+
+| student_id   | name      | address   | dob_year | age  | gender |
++--------------+-----------+-----------+----------+------+--------+
+|            0 | ABCD EFGH | Not Given |     0000 | NULL | Male   |
+| 190103020001 | ABCD      | Not Given |     0000 | NULL | Male   |
+| 190103020003 | DEFG      |           |     1990 |   28 | Male   |
++--------------+-----------+-----------+----------+------+--------+
+3 rows in set (0.02 sec)
+
+mysql> select name,age from student;
++-----------+------+
+| name      | age  |
++-----------+------+
+| ABCD EFGH | NULL |
+| ABCD      | NULL |
+| DEFG      |   28 |
++-----------+------+
+3 rows in set (0.00 sec)
+
+mysql> select distinct name from student;
++-----------+
+| name      |
++-----------+
+| ABCD EFGH |
+| ABCD      |
+| DEFG      |
++-----------+
+3 rows in set (0.00 sec)
+
+mysql> select distinct name,age from student;
++-----------+------+
+| name      | age  |
++-----------+------+
+| ABCD EFGH | NULL |
+| ABCD      | NULL |
+| DEFG      |   28 |
++-----------+------+
+3 rows in set (0.00 sec)
+
+mysql> select distinct age from student;
++------+
+| age  |
++------+
+| NULL |
+|   28 |
++------+
+2 rows in set (0.00 sec)
+
+mysql> select * from student where gender='Male';
++--------------+-----------+-----------+----------+------+--------+
+| student_id   | name      | address   | dob_year | age  | gender |
++--------------+-----------+-----------+----------+------+--------+
+|            0 | ABCD EFGH | Not Given |     0000 | NULL | Male   |
+| 190103020001 | ABCD      | Not Given |     0000 | NULL | Male   |
+| 190103020003 | DEFG      |           |     1990 |   28 | Male   |
++--------------+-----------+-----------+----------+------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select * from student where gender='Female';
+Empty set (0.00 sec)
+
+mysql> select * from student where name='DEFG';
++--------------+------+---------+----------+------+--------+
+| student_id   | name | address | dob_year | age  | gender |
++--------------+------+---------+----------+------+--------+
+| 190103020003 | DEFG |         |     1990 |   28 | Male   |
++--------------+------+---------+----------+------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from student where name='DEFG' and age>20;
++--------------+------+---------+----------+------+--------+
+| student_id   | name | address | dob_year | age  | gender |
++--------------+------+---------+----------+------+--------+
+| 190103020003 | DEFG |         |     1990 |   28 | Male   |
++--------------+------+---------+----------+------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from student where name='DEFG' and age>30;
+Empty set (0.00 sec)
+
+mysql> select * from student where gender!='Male';
+Empty set (0.00 sec)
+
+mysql> select * from student where gender!='Female';
++--------------+-----------+-----------+----------+------+--------+
+| student_id   | name      | address   | dob_year | age  | gender |
++--------------+-----------+-----------+----------+------+--------+
+|            0 | ABCD EFGH | Not Given |     0000 | NULL | Male   |
+| 190103020001 | ABCD      | Not Given |     0000 | NULL | Male   |
+| 190103020003 | DEFG      |           |     1990 |   28 | Male   |
++--------------+-----------+-----------+----------+------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select * from student where (name='Asif' and gender='Male') or age>20;
++--------------+------+---------+----------+------+--------+
+| student_id   | name | address | dob_year | age  | gender |
++--------------+------+---------+----------+------+--------+
+| 190103020003 | DEFG |         |     1990 |   28 | Male   |
++--------------+------+---------+----------+------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from student where name='Asif' and gender='Male' or age>20;
++--------------+------+---------+----------+------+--------+
+| student_id   | name | address | dob_year | age  | gender |
++--------------+------+---------+----------+------+--------+
+| 190103020003 | DEFG |         |     1990 |   28 | Male   |
++--------------+------+---------+----------+------+--------+
+1 row in set (0.00 sec)
+
+mysql> truncate table student;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> select * from student;
+Empty set (0.00 sec)
+
+mysql> desc student;
++------------+-------------------------------+------+-----+-----------+-------+
+| Field      | Type                          | Null | Key | Default   | Extra |
++------------+-------------------------------+------+-----+-----------+-------+
+| student_id | bigint(12)                    | NO   | PRI | 0         |       |
+| name       | varchar(30)                   | NO   | PRI |           |       |
+| address    | varchar(250)                  | YES  |     | Not Given |       |
+| dob_year   | year(4)                       | NO   |     | NULL      |       |
+| age        | int(2)                        | YES  | UNI | NULL      |       |
+| gender     | enum('Male','Female','Other') | NO   |     | NULL      |       |
++------------+-------------------------------+------+-----+-----------+-------+
+6 rows in set (0.01 sec)
+
+mysql> alter table student drop column age;
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table student drop column dob;
+ERROR 1091 (42000): Can't DROP 'dob'; check that column/key exists
+mysql> alter table student drop column dob_yeat;
+ERROR 1091 (42000): Can't DROP 'dob_yeat'; check that column/key exists
+mysql> alter table student drop column dob_year;
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++------------+-------------------------------+------+-----+-----------+-------+
+| Field      | Type                          | Null | Key | Default   | Extra |
++------------+-------------------------------+------+-----+-----------+-------+
+| student_id | bigint(12)                    | NO   | PRI | 0         |       |
+| name       | varchar(30)                   | NO   | PRI |           |       |
+| address    | varchar(250)                  | YES  |     | Not Given |       |
+| gender     | enum('Male','Female','Other') | NO   |     | NULL      |       |
++------------+-------------------------------+------+-----+-----------+-------+
+4 rows in set (0.02 sec)
+
+mysql> insert into student values
+    -> (180103020011,'Rudro','Sylhet','Male'),
+    -> (180103020017,'Samia','Sylhet','Female'),
+    -> (180103020023,'Tonoya','Gulapgonj','Female'),
+    -> (180103020025,'Rejwana','Sylhet','Female'),
+    -> (180103020005,'Khadija','Moulovibazar','Female'),
+    -> (180103020035,'Fatema','Jakigonj','Female'),
+    -> (170303020001,'Rimu','Tangail','Female'),
+    -> (170303020006,'Rabbi','Tangail','Male'),
+    -> (170303020008,'Marjana','Gulapgonj','Female'),
+    -> (180103020043,'Kamrul','Bishwanath','Male'),
+    -> (180103020031,'Sonjib','Sylhet','Male'),
+    -> (180103020041,'Abdullah','Beanibazar','Male'),
+    -> (180103020055,'Abdullah','Chatok','Male');
+Query OK, 13 rows affected (0.03 sec)
+Records: 13  Duplicates: 0  Warnings: 0
+
+mysql> select * from student;
++--------------+----------+--------------+--------+
+| student_id   | name     | address      | gender |
++--------------+----------+--------------+--------+
+| 170303020001 | Rimu     | Tangail      | Female |
+| 170303020006 | Rabbi    | Tangail      | Male   |
+| 170303020008 | Marjana  | Gulapgonj    | Female |
+| 180103020005 | Khadija  | Moulovibazar | Female |
+| 180103020011 | Rudro    | Sylhet       | Male   |
+| 180103020017 | Samia    | Sylhet       | Female |
+| 180103020023 | Tonoya   | Gulapgonj    | Female |
+| 180103020025 | Rejwana  | Sylhet       | Female |
+| 180103020031 | Sonjib   | Sylhet       | Male   |
+| 180103020035 | Fatema   | Jakigonj     | Female |
+| 180103020041 | Abdullah | Beanibazar   | Male   |
+| 180103020043 | Kamrul   | Bishwanath   | Male   |
+| 180103020055 | Abdullah | Chatok       | Male   |
++--------------+----------+--------------+--------+
+13 rows in set (0.00 sec)
+
+mysql> select * from student;
++--------------+----------+--------------+--------+
+| student_id   | name     | address      | gender |
++--------------+----------+--------------+--------+
+| 170303020001 | Rimu     | Tangail      | Female |
+| 170303020006 | Rabbi    | Tangail      | Male   |
+| 170303020008 | Marjana  | Gulapgonj    | Female |
+| 180103020005 | Khadija  | Moulovibazar | Female |
+| 180103020011 | Rudro    | Sylhet       | Male   |
+| 180103020017 | Samia    | Sylhet       | Female |
+| 180103020023 | Tonoya   | Gulapgonj    | Female |
+| 180103020025 | Rejwana  | Sylhet       | Female |
+| 180103020031 | Sonjib   | Sylhet       | Male   |
+| 180103020035 | Fatema   | Jakigonj     | Female |
+| 180103020041 | Abdullah | Beanibazar   | Male   |
+| 180103020043 | Kamrul   | Bishwanath   | Male   |
+| 180103020055 | Abdullah | Chatok       | Male   |
++--------------+----------+--------------+--------+
+13 rows in set (0.00 sec)
+
+mysql> select * from student where address='Sylhet';
++--------------+---------+---------+--------+
+| student_id   | name    | address | gender |
++--------------+---------+---------+--------+
+| 180103020011 | Rudro   | Sylhet  | Male   |
+| 180103020017 | Samia   | Sylhet  | Female |
+| 180103020025 | Rejwana | Sylhet  | Female |
+| 180103020031 | Sonjib  | Sylhet  | Male   |
++--------------+---------+---------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select * from student where address='Sylhet' and gender='Male';
++--------------+--------+---------+--------+
+| student_id   | name   | address | gender |
++--------------+--------+---------+--------+
+| 180103020011 | Rudro  | Sylhet  | Male   |
+| 180103020031 | Sonjib | Sylhet  | Male   |
++--------------+--------+---------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from student where address='Sylhet' and gender='Male' order by student_id desc;
++--------------+--------+---------+--------+
+| student_id   | name   | address | gender |
++--------------+--------+---------+--------+
+| 180103020031 | Sonjib | Sylhet  | Male   |
+| 180103020011 | Rudro  | Sylhet  | Male   |
++--------------+--------+---------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from student where address='Sylhet' and gender='Male' order by 1 desc;
++--------------+--------+---------+--------+
+| student_id   | name   | address | gender |
++--------------+--------+---------+--------+
+| 180103020031 | Sonjib | Sylhet  | Male   |
+| 180103020011 | Rudro  | Sylhet  | Male   |
++--------------+--------+---------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from student where address='Sylhet' and gender='Male' order by 1;
++--------------+--------+---------+--------+
+| student_id   | name   | address | gender |
++--------------+--------+---------+--------+
+| 180103020011 | Rudro  | Sylhet  | Male   |
+| 180103020031 | Sonjib | Sylhet  | Male   |
++--------------+--------+---------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from student where address='Sylhet' and gender='Male' order by 2;
++--------------+--------+---------+--------+
+| student_id   | name   | address | gender |
++--------------+--------+---------+--------+
+| 180103020011 | Rudro  | Sylhet  | Male   |
+| 180103020031 | Sonjib | Sylhet  | Male   |
++--------------+--------+---------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from student order by 1;
++--------------+----------+--------------+--------+
+| student_id   | name     | address      | gender |
++--------------+----------+--------------+--------+
+| 170303020001 | Rimu     | Tangail      | Female |
+| 170303020006 | Rabbi    | Tangail      | Male   |
+| 170303020008 | Marjana  | Gulapgonj    | Female |
+| 180103020005 | Khadija  | Moulovibazar | Female |
+| 180103020011 | Rudro    | Sylhet       | Male   |
+| 180103020017 | Samia    | Sylhet       | Female |
+| 180103020023 | Tonoya   | Gulapgonj    | Female |
+| 180103020025 | Rejwana  | Sylhet       | Female |
+| 180103020031 | Sonjib   | Sylhet       | Male   |
+| 180103020035 | Fatema   | Jakigonj     | Female |
+| 180103020041 | Abdullah | Beanibazar   | Male   |
+| 180103020043 | Kamrul   | Bishwanath   | Male   |
+| 180103020055 | Abdullah | Chatok       | Male   |
++--------------+----------+--------------+--------+
+13 rows in set (0.00 sec)
+
+mysql> select * from student order by 1 desc;
++--------------+----------+--------------+--------+
+| student_id   | name     | address      | gender |
++--------------+----------+--------------+--------+
+| 180103020055 | Abdullah | Chatok       | Male   |
+| 180103020043 | Kamrul   | Bishwanath   | Male   |
+| 180103020041 | Abdullah | Beanibazar   | Male   |
+| 180103020035 | Fatema   | Jakigonj     | Female |
+| 180103020031 | Sonjib   | Sylhet       | Male   |
+| 180103020025 | Rejwana  | Sylhet       | Female |
+| 180103020023 | Tonoya   | Gulapgonj    | Female |
+| 180103020017 | Samia    | Sylhet       | Female |
+| 180103020011 | Rudro    | Sylhet       | Male   |
+| 180103020005 | Khadija  | Moulovibazar | Female |
+| 170303020008 | Marjana  | Gulapgonj    | Female |
+| 170303020006 | Rabbi    | Tangail      | Male   |
+| 170303020001 | Rimu     | Tangail      | Female |
++--------------+----------+--------------+--------+
+13 rows in set (0.00 sec)
+
+mysql> select * from student order by 2 desc;
++--------------+----------+--------------+--------+
+| student_id   | name     | address      | gender |
++--------------+----------+--------------+--------+
+| 180103020023 | Tonoya   | Gulapgonj    | Female |
+| 180103020031 | Sonjib   | Sylhet       | Male   |
+| 180103020017 | Samia    | Sylhet       | Female |
+| 180103020011 | Rudro    | Sylhet       | Male   |
+| 170303020001 | Rimu     | Tangail      | Female |
+| 180103020025 | Rejwana  | Sylhet       | Female |
+| 170303020006 | Rabbi    | Tangail      | Male   |
+| 170303020008 | Marjana  | Gulapgonj    | Female |
+| 180103020005 | Khadija  | Moulovibazar | Female |
+| 180103020043 | Kamrul   | Bishwanath   | Male   |
+| 180103020035 | Fatema   | Jakigonj     | Female |
+| 180103020041 | Abdullah | Beanibazar   | Male   |
+| 180103020055 | Abdullah | Chatok       | Male   |
++--------------+----------+--------------+--------+
+13 rows in set (0.00 sec)
+
+mysql> select * from student order by 2;
++--------------+----------+--------------+--------+
+| student_id   | name     | address      | gender |
++--------------+----------+--------------+--------+
+| 180103020055 | Abdullah | Chatok       | Male   |
+| 180103020041 | Abdullah | Beanibazar   | Male   |
+| 180103020035 | Fatema   | Jakigonj     | Female |
+| 180103020043 | Kamrul   | Bishwanath   | Male   |
+| 180103020005 | Khadija  | Moulovibazar | Female |
+| 170303020008 | Marjana  | Gulapgonj    | Female |
+| 170303020006 | Rabbi    | Tangail      | Male   |
+| 180103020025 | Rejwana  | Sylhet       | Female |
+| 170303020001 | Rimu     | Tangail      | Female |
+| 180103020011 | Rudro    | Sylhet       | Male   |
+| 180103020017 | Samia    | Sylhet       | Female |
+| 180103020031 | Sonjib   | Sylhet       | Male   |
+| 180103020023 | Tonoya   | Gulapgonj    | Female |
++--------------+----------+--------------+--------+
+13 rows in set (0.00 sec)
+
+mysql> select gender, name from student order by name asc;
++--------+----------+
+| gender | name     |
++--------+----------+
+| Male   | Abdullah |
+| Male   | Abdullah |
+| Female | Fatema   |
+| Male   | Kamrul   |
+| Female | Khadija  |
+| Female | Marjana  |
+| Male   | Rabbi    |
+| Female | Rejwana  |
+| Female | Rimu     |
+| Male   | Rudro    |
+| Female | Samia    |
+| Male   | Sonjib   |
+| Female | Tonoya   |
++--------+----------+
+13 rows in set (0.00 sec)
+
+mysql> select gender, name,student_id from student order by name asc;
++--------+----------+--------------+
+| gender | name     | student_id   |
++--------+----------+--------------+
+| Male   | Abdullah | 180103020055 |
+| Male   | Abdullah | 180103020041 |
+| Female | Fatema   | 180103020035 |
+| Male   | Kamrul   | 180103020043 |
+| Female | Khadija  | 180103020005 |
+| Female | Marjana  | 170303020008 |
+| Male   | Rabbi    | 170303020006 |
+| Female | Rejwana  | 180103020025 |
+| Female | Rimu     | 170303020001 |
+| Male   | Rudro    | 180103020011 |
+| Female | Samia    | 180103020017 |
+| Male   | Sonjib   | 180103020031 |
+| Female | Tonoya   | 180103020023 |
++--------+----------+--------------+
+13 rows in set (0.00 sec)
+
+mysql> select distinct name from student order by 1 desc;
++----------+
+| name     |
++----------+
+| Tonoya   |
+| Sonjib   |
+| Samia    |
+| Rudro    |
+| Rimu     |
+| Rejwana  |
+| Rabbi    |
+| Marjana  |
+| Khadija  |
+| Kamrul   |
+| Fatema   |
+| Abdullah |
++----------+
+12 rows in set (0.00 sec)
+
+mysql> select distinct name from student order by 2 desc;
+ERROR 1054 (42S22): Unknown column '2' in 'order clause'
+mysql> select * from student order by 2 desc;
++--------------+----------+--------------+--------+
+| student_id   | name     | address      | gender |
++--------------+----------+--------------+--------+
+| 180103020023 | Tonoya   | Gulapgonj    | Female |
+| 180103020031 | Sonjib   | Sylhet       | Male   |
+| 180103020017 | Samia    | Sylhet       | Female |
+| 180103020011 | Rudro    | Sylhet       | Male   |
+| 170303020001 | Rimu     | Tangail      | Female |
+| 180103020025 | Rejwana  | Sylhet       | Female |
+| 170303020006 | Rabbi    | Tangail      | Male   |
+| 170303020008 | Marjana  | Gulapgonj    | Female |
+| 180103020005 | Khadija  | Moulovibazar | Female |
+| 180103020043 | Kamrul   | Bishwanath   | Male   |
+| 180103020035 | Fatema   | Jakigonj     | Female |
+| 180103020041 | Abdullah | Beanibazar   | Male   |
+| 180103020055 | Abdullah | Chatok       | Male   |
++--------------+----------+--------------+--------+
+13 rows in set (0.00 sec)
+
+mysql> select * from student;
++--------------+----------+--------------+--------+
+| student_id   | name     | address      | gender |
++--------------+----------+--------------+--------+
+| 170303020001 | Rimu     | Tangail      | Female |
+| 170303020006 | Rabbi    | Tangail      | Male   |
+| 170303020008 | Marjana  | Gulapgonj    | Female |
+| 180103020005 | Khadija  | Moulovibazar | Female |
+| 180103020011 | Rudro    | Sylhet       | Male   |
+| 180103020017 | Samia    | Sylhet       | Female |
+| 180103020023 | Tonoya   | Gulapgonj    | Female |
+| 180103020025 | Rejwana  | Sylhet       | Female |
+| 180103020031 | Sonjib   | Sylhet       | Male   |
+| 180103020035 | Fatema   | Jakigonj     | Female |
+| 180103020041 | Abdullah | Beanibazar   | Male   |
+| 180103020043 | Kamrul   | Bishwanath   | Male   |
+| 180103020055 | Abdullah | Chatok       | Male   |
++--------------+----------+--------------+--------+
+13 rows in set (0.00 sec)
+
+mysql> select * from student limit 3,5;
++--------------+---------+--------------+--------+
+| student_id   | name    | address      | gender |
++--------------+---------+--------------+--------+
+| 180103020005 | Khadija | Moulovibazar | Female |
+| 180103020011 | Rudro   | Sylhet       | Male   |
+| 180103020017 | Samia   | Sylhet       | Female |
+| 180103020023 | Tonoya  | Gulapgonj    | Female |
+| 180103020025 | Rejwana | Sylhet       | Female |
++--------------+---------+--------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student order by 2 asc limit 3,5;
++--------------+---------+--------------+--------+
+| student_id   | name    | address      | gender |
++--------------+---------+--------------+--------+
+| 180103020043 | Kamrul  | Bishwanath   | Male   |
+| 180103020005 | Khadija | Moulovibazar | Female |
+| 170303020008 | Marjana | Gulapgonj    | Female |
+| 170303020006 | Rabbi   | Tangail      | Male   |
+| 180103020025 | Rejwana | Sylhet       | Female |
++--------------+---------+--------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student order by 2 asc;
++--------------+----------+--------------+--------+
+| student_id   | name     | address      | gender |
++--------------+----------+--------------+--------+
+| 180103020055 | Abdullah | Chatok       | Male   |
+| 180103020041 | Abdullah | Beanibazar   | Male   |
+| 180103020035 | Fatema   | Jakigonj     | Female |
+| 180103020043 | Kamrul   | Bishwanath   | Male   |
+| 180103020005 | Khadija  | Moulovibazar | Female |
+| 170303020008 | Marjana  | Gulapgonj    | Female |
+| 170303020006 | Rabbi    | Tangail      | Male   |
+| 180103020025 | Rejwana  | Sylhet       | Female |
+| 170303020001 | Rimu     | Tangail      | Female |
+| 180103020011 | Rudro    | Sylhet       | Male   |
+| 180103020017 | Samia    | Sylhet       | Female |
+| 180103020031 | Sonjib   | Sylhet       | Male   |
+| 180103020023 | Tonoya   | Gulapgonj    | Female |
++--------------+----------+--------------+--------+
+13 rows in set (0.00 sec)
+
+mysql> select * from student order by 2 desc limit 3,5;
++--------------+---------+-----------+--------+
+| student_id   | name    | address   | gender |
++--------------+---------+-----------+--------+
+| 180103020011 | Rudro   | Sylhet    | Male   |
+| 170303020001 | Rimu    | Tangail   | Female |
+| 180103020025 | Rejwana | Sylhet    | Female |
+| 170303020006 | Rabbi   | Tangail   | Male   |
+| 170303020008 | Marjana | Gulapgonj | Female |
++--------------+---------+-----------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student order by 2 desc;
++--------------+----------+--------------+--------+
+| student_id   | name     | address      | gender |
++--------------+----------+--------------+--------+
+| 180103020023 | Tonoya   | Gulapgonj    | Female |
+| 180103020031 | Sonjib   | Sylhet       | Male   |
+| 180103020017 | Samia    | Sylhet       | Female |
+| 180103020011 | Rudro    | Sylhet       | Male   |
+| 170303020001 | Rimu     | Tangail      | Female |
+| 180103020025 | Rejwana  | Sylhet       | Female |
+| 170303020006 | Rabbi    | Tangail      | Male   |
+| 170303020008 | Marjana  | Gulapgonj    | Female |
+| 180103020005 | Khadija  | Moulovibazar | Female |
+| 180103020043 | Kamrul   | Bishwanath   | Male   |
+| 180103020035 | Fatema   | Jakigonj     | Female |
+| 180103020041 | Abdullah | Beanibazar   | Male   |
+| 180103020055 | Abdullah | Chatok       | Male   |
++--------------+----------+--------------+--------+
+13 rows in set (0.00 sec)
+
+mysql> select * from student order by 2 desc limit 3,50;
++--------------+----------+--------------+--------+
+| student_id   | name     | address      | gender |
++--------------+----------+--------------+--------+
+| 180103020011 | Rudro    | Sylhet       | Male   |
+| 170303020001 | Rimu     | Tangail      | Female |
+| 180103020025 | Rejwana  | Sylhet       | Female |
+| 170303020006 | Rabbi    | Tangail      | Male   |
+| 170303020008 | Marjana  | Gulapgonj    | Female |
+| 180103020005 | Khadija  | Moulovibazar | Female |
+| 180103020043 | Kamrul   | Bishwanath   | Male   |
+| 180103020035 | Fatema   | Jakigonj     | Female |
+| 180103020041 | Abdullah | Beanibazar   | Male   |
+| 180103020055 | Abdullah | Chatok       | Male   |
++--------------+----------+--------------+--------+
+10 rows in set (0.00 sec)
+
+mysql> select * from student order by 2 desc limit 3;
++--------------+--------+-----------+--------+
+| student_id   | name   | address   | gender |
++--------------+--------+-----------+--------+
+| 180103020023 | Tonoya | Gulapgonj | Female |
+| 180103020031 | Sonjib | Sylhet    | Male   |
+| 180103020017 | Samia  | Sylhet    | Female |
++--------------+--------+-----------+--------+
+3 rows in set (0.00 sec)
+
+mysql> delete from student where student_id=180103020031;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from student;
++--------------+----------+--------------+--------+
+| student_id   | name     | address      | gender |
++--------------+----------+--------------+--------+
+| 170303020001 | Rimu     | Tangail      | Female |
+| 170303020006 | Rabbi    | Tangail      | Male   |
+| 170303020008 | Marjana  | Gulapgonj    | Female |
+| 180103020005 | Khadija  | Moulovibazar | Female |
+| 180103020011 | Rudro    | Sylhet       | Male   |
+| 180103020017 | Samia    | Sylhet       | Female |
+| 180103020023 | Tonoya   | Gulapgonj    | Female |
+| 180103020025 | Rejwana  | Sylhet       | Female |
+| 180103020035 | Fatema   | Jakigonj     | Female |
+| 180103020041 | Abdullah | Beanibazar   | Male   |
+| 180103020043 | Kamrul   | Bishwanath   | Male   |
+| 180103020055 | Abdullah | Chatok       | Male   |
++--------------+----------+--------------+--------+
+12 rows in set (0.00 sec)
+
+mysql> delete from student where name='Abdullah';
+Query OK, 2 rows affected (0.02 sec)
+
+mysql> select * from student;
++--------------+---------+--------------+--------+
+| student_id   | name    | address      | gender |
++--------------+---------+--------------+--------+
+| 170303020001 | Rimu    | Tangail      | Female |
+| 170303020006 | Rabbi   | Tangail      | Male   |
+| 170303020008 | Marjana | Gulapgonj    | Female |
+| 180103020005 | Khadija | Moulovibazar | Female |
+| 180103020011 | Rudro   | Sylhet       | Male   |
+| 180103020017 | Samia   | Sylhet       | Female |
+| 180103020023 | Tonoya  | Gulapgonj    | Female |
+| 180103020025 | Rejwana | Sylhet       | Female |
+| 180103020035 | Fatema  | Jakigonj     | Female |
+| 180103020043 | Kamrul  | Bishwanath   | Male   |
++--------------+---------+--------------+--------+
+10 rows in set (0.00 sec)
+
+mysql> delete from student;
+Query OK, 10 rows affected (0.00 sec)
+
+mysql> select * from student;
+Empty set (0.00 sec)
+
+mysql> insert into student values
+    -> (180103020011,'Rudro','Sylhet','Male'),
+    -> (180103020017,'Samia','Sylhet','Female'),
+    -> (180103020023,'Tonoya','Gulapgonj','Female'),
+    -> (180103020025,'Rejwana','Sylhet','Female'),
+    -> (180103020005,'Khadija','Moulovibazar','Female'),
+    -> (180103020035,'Fatema','Jakigonj','Female'),
+    -> (170303020001,'Rimu','Tangail','Female'),
+    -> (170303020006,'Rabbi','Tangail','Male'),
+    -> (170303020008,'Marjana','Gulapgonj','Female'),
+    -> (180103020043,'Kamrul','Bishwanath','Male'),
+    -> (180103020031,'Sonjib','Sylhet','Male'),
+    -> (180103020041,'Abdullah','Beanibazar','Male'),
+    -> (180103020055,'Abdullah','Chatok','Male');
+Query OK, 13 rows affected (0.00 sec)
+Records: 13  Duplicates: 0  Warnings: 0
+
+mysql> select * from student;
++--------------+----------+--------------+--------+
+| student_id   | name     | address      | gender |
++--------------+----------+--------------+--------+
+| 170303020001 | Rimu     | Tangail      | Female |
+| 170303020006 | Rabbi    | Tangail      | Male   |
+| 170303020008 | Marjana  | Gulapgonj    | Female |
+| 180103020005 | Khadija  | Moulovibazar | Female |
+| 180103020011 | Rudro    | Sylhet       | Male   |
+| 180103020017 | Samia    | Sylhet       | Female |
+| 180103020023 | Tonoya   | Gulapgonj    | Female |
+| 180103020025 | Rejwana  | Sylhet       | Female |
+| 180103020031 | Sonjib   | Sylhet       | Male   |
+| 180103020035 | Fatema   | Jakigonj     | Female |
+| 180103020041 | Abdullah | Beanibazar   | Male   |
+| 180103020043 | Kamrul   | Bishwanath   | Male   |
+| 180103020055 | Abdullah | Chatok       | Male   |
++--------------+----------+--------------+--------+
+13 rows in set (0.00 sec)
+
+mysql>
+--------------------------------------------------
+
+update student set
+	name='Abdullah Al Masud'
+where student_id=180103020055;
+	
+	
+create table course(
+	course_code varchar(8) primary key,
+	title varchar(80) not null,
+	credits float(5,2)not null);
+
+
+insert into course values
+('CSE 111','Fundamentals of Computers',3.00),
+('CSE 113','Structure Programming Language',3.00),
+('CSE 114','Structure Programming Language Lab',1.50),
+('CSE 211','Object Oriented Programming Language',3.0),
+('CSE 212','Object Oriented Programming Language Lab',1.5),
+('CSE 313','Database System',3.0),
+('CSE 314','Database System Lab',1.5);
+
+
+create table course_registration(
+	s_id bigint(12),
+	c_id varchar(8),
+	semester enum('Spring','Summer','Fall') not null,
+	s_year year not null,
+	constraint st_fk foreign key(s_id) references student(student_id),
+	constraint c_fk foreign key(c_id) references course(course_code),
+	primary key(s_id,c_id,semester,s_year)
+	);
+
+insert into course_registration values
+	(180103020001,'CSE 111','Fall',2018);
+
+
+alter table student modify student_id bigint(12) primary key; 
+
+
+
+ALTER TABLE [table_name]
+ADD FOREIGN KEY (column) REFERENCES [table_name](column);
+
+ALTER TABLE [table_name]
+ADD CONSTRAINT [constraint_name]
+FOREIGN KEY (column) REFERENCES [table_name](column);
+
+ALTER TABLE [table_name] DROP FOREIGN KEY[key_name];
+
+https://www.w3schools.com/sql/sql_foreignkey.asp
+
+
+---------------------------------------------------
+
+
+Setting environment for using XAMPP for Windows.
+User-PC@DESKTOP-UJ43265 c:\xampp
+# mysql -h localhost -u root -p
+Enter password:
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 1
+Server version: 5.6.21 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2014, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| cdcol              |
+| mysql              |
+| neub               |
+| performance_schema |
+| phpmyadmin         |
+| shop               |
+| test               |
+| university         |
+| webauth            |
++--------------------+
+10 rows in set (0.02 sec)
+
+mysql> use neub;
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_neub |
++----------------+
+| student        |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> desc student;
++------------+-------------------------------+------+-----+-----------+-------+
+| Field      | Type                          | Null | Key | Default   | Extra |
++------------+-------------------------------+------+-----+-----------+-------+
+| student_id | bigint(12)                    | NO   | PRI | 0         |       |
+| name       | varchar(30)                   | NO   | PRI |           |       |
+| address    | varchar(250)                  | YES  |     | Not Given |       |
+| dob_year   | year(4)                       | NO   |     | NULL      |       |
+| age        | int(2)                        | YES  | UNI | NULL      |       |
+| gender     | enum('Male','Female','Other') | NO   |     | NULL      |       |
++------------+-------------------------------+------+-----+-----------+-------+
+6 rows in set (0.02 sec)
+
+mysql> select * from student;
++--------------+-----------+-----------+----------+------+--------+
+| student_id   | name      | address   | dob_year | age  | gender |
++--------------+-----------+-----------+----------+------+--------+
+|            0 | ABCD EFGH | Not Given |     0000 | NULL | Male   |
+| 190103020001 | ABCD      | Not Given |     0000 | NULL | Male   |
+| 190103020003 | DEFG      |           |     1990 |   28 | Male   |
++--------------+-----------+-----------+----------+------+--------+
+3 rows in set (0.02 sec)
+
+mysql> select name,age from student;
++-----------+------+
+| name      | age  |
++-----------+------+
+| ABCD EFGH | NULL |
+| ABCD      | NULL |
+| DEFG      |   28 |
++-----------+------+
+3 rows in set (0.00 sec)
+
+mysql> select distinct name from student;
++-----------+
+| name      |
++-----------+
+| ABCD EFGH |
+| ABCD      |
+| DEFG      |
++-----------+
+3 rows in set (0.00 sec)
+
+mysql> select distinct name,age from student;
++-----------+------+
+| name      | age  |
++-----------+------+
+| ABCD EFGH | NULL |
+| ABCD      | NULL |
+| DEFG      |   28 |
++-----------+------+
+3 rows in set (0.00 sec)
+
+mysql> select distinct age from student;
++------+
+| age  |
++------+
+| NULL |
+|   28 |
++------+
+2 rows in set (0.00 sec)
+
+mysql> select * from student where gender='Male';
++--------------+-----------+-----------+----------+------+--------+
+| student_id   | name      | address   | dob_year | age  | gender |
++--------------+-----------+-----------+----------+------+--------+
+|            0 | ABCD EFGH | Not Given |     0000 | NULL | Male   |
+| 190103020001 | ABCD      | Not Given |     0000 | NULL | Male   |
+| 190103020003 | DEFG      |           |     1990 |   28 | Male   |
++--------------+-----------+-----------+----------+------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select * from student where gender='Female';
+Empty set (0.00 sec)
+
+mysql> select * from student where name='DEFG';
++--------------+------+---------+----------+------+--------+
+| student_id   | name | address | dob_year | age  | gender |
++--------------+------+---------+----------+------+--------+
+| 190103020003 | DEFG |         |     1990 |   28 | Male   |
++--------------+------+---------+----------+------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from student where name='DEFG' and age>20;
++--------------+------+---------+----------+------+--------+
+| student_id   | name | address | dob_year | age  | gender |
++--------------+------+---------+----------+------+--------+
+| 190103020003 | DEFG |         |     1990 |   28 | Male   |
++--------------+------+---------+----------+------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from student where name='DEFG' and age>30;
+Empty set (0.00 sec)
+
+mysql> select * from student where gender!='Male';
+Empty set (0.00 sec)
+
+mysql> select * from student where gender!='Female';
++--------------+-----------+-----------+----------+------+--------+
+| student_id   | name      | address   | dob_year | age  | gender |
++--------------+-----------+-----------+----------+------+--------+
+|            0 | ABCD EFGH | Not Given |     0000 | NULL | Male   |
+| 190103020001 | ABCD      | Not Given |     0000 | NULL | Male   |
+| 190103020003 | DEFG      |           |     1990 |   28 | Male   |
++--------------+-----------+-----------+----------+------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select * from student where (name='Asif' and gender='Male') or age>20;
++--------------+------+---------+----------+------+--------+
+| student_id   | name | address | dob_year | age  | gender |
++--------------+------+---------+----------+------+--------+
+| 190103020003 | DEFG |         |     1990 |   28 | Male   |
++--------------+------+---------+----------+------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from student where name='Asif' and gender='Male' or age>20;
++--------------+------+---------+----------+------+--------+
+| student_id   | name | address | dob_year | age  | gender |
++--------------+------+---------+----------+------+--------+
+| 190103020003 | DEFG |         |     1990 |   28 | Male   |
++--------------+------+---------+----------+------+--------+
+1 row in set (0.00 sec)
+
+mysql> truncate table student;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> select * from student;
+Empty set (0.00 sec)
+
+mysql> desc student;
++------------+-------------------------------+------+-----+-----------+-------+
+| Field      | Type                          | Null | Key | Default   | Extra |
++------------+-------------------------------+------+-----+-----------+-------+
+| student_id | bigint(12)                    | NO   | PRI | 0         |       |
+| name       | varchar(30)                   | NO   | PRI |           |       |
+| address    | varchar(250)                  | YES  |     | Not Given |       |
+| dob_year   | year(4)                       | NO   |     | NULL      |       |
+| age        | int(2)                        | YES  | UNI | NULL      |       |
+| gender     | enum('Male','Female','Other') | NO   |     | NULL      |       |
++------------+-------------------------------+------+-----+-----------+-------+
+6 rows in set (0.01 sec)
+
+mysql> alter table student drop column age;
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table student drop column dob;
+ERROR 1091 (42000): Can't DROP 'dob'; check that column/key exists
+mysql> alter table student drop column dob_yeat;
+ERROR 1091 (42000): Can't DROP 'dob_yeat'; check that column/key exists
+mysql> alter table student drop column dob_year;
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++------------+-------------------------------+------+-----+-----------+-------+
+| Field      | Type                          | Null | Key | Default   | Extra |
++------------+-------------------------------+------+-----+-----------+-------+
+| student_id | bigint(12)                    | NO   | PRI | 0         |       |
+| name       | varchar(30)                   | NO   | PRI |           |       |
+| address    | varchar(250)                  | YES  |     | Not Given |       |
+| gender     | enum('Male','Female','Other') | NO   |     | NULL      |       |
++------------+-------------------------------+------+-----+-----------+-------+
+4 rows in set (0.02 sec)
+
+mysql> insert into student values
+    -> (180103020011,'Rudro','Sylhet','Male'),
+    -> (180103020017,'Samia','Sylhet','Female'),
+    -> (180103020023,'Tonoya','Gulapgonj','Female'),
+    -> (180103020025,'Rejwana','Sylhet','Female'),
+    -> (180103020005,'Khadija','Moulovibazar','Female'),
+    -> (180103020035,'Fatema','Jakigonj','Female'),
+    -> (170303020001,'Rimu','Tangail','Female'),
+    -> (170303020006,'Rabbi','Tangail','Male'),
+    -> (170303020008,'Marjana','Gulapgonj','Female'),
+    -> (180103020043,'Kamrul','Bishwanath','Male'),
+    -> (180103020031,'Sonjib','Sylhet','Male'),
+    -> (180103020041,'Abdullah','Beanibazar','Male'),
+    -> (180103020055,'Abdullah','Chatok','Male');
+Query OK, 13 rows affected (0.03 sec)
+Records: 13  Duplicates: 0  Warnings: 0
+
+mysql> select * from student;
++--------------+----------+--------------+--------+
+| student_id   | name     | address      | gender |
++--------------+----------+--------------+--------+
+| 170303020001 | Rimu     | Tangail      | Female |
+| 170303020006 | Rabbi    | Tangail      | Male   |
+| 170303020008 | Marjana  | Gulapgonj    | Female |
+| 180103020005 | Khadija  | Moulovibazar | Female |
+| 180103020011 | Rudro    | Sylhet       | Male   |
+| 180103020017 | Samia    | Sylhet       | Female |
+| 180103020023 | Tonoya   | Gulapgonj    | Female |
+| 180103020025 | Rejwana  | Sylhet       | Female |
+| 180103020031 | Sonjib   | Sylhet       | Male   |
+| 180103020035 | Fatema   | Jakigonj     | Female |
+| 180103020041 | Abdullah | Beanibazar   | Male   |
+| 180103020043 | Kamrul   | Bishwanath   | Male   |
+| 180103020055 | Abdullah | Chatok       | Male   |
++--------------+----------+--------------+--------+
+13 rows in set (0.00 sec)
+
+mysql> select * from student;
++--------------+----------+--------------+--------+
+| student_id   | name     | address      | gender |
++--------------+----------+--------------+--------+
+| 170303020001 | Rimu     | Tangail      | Female |
+| 170303020006 | Rabbi    | Tangail      | Male   |
+| 170303020008 | Marjana  | Gulapgonj    | Female |
+| 180103020005 | Khadija  | Moulovibazar | Female |
+| 180103020011 | Rudro    | Sylhet       | Male   |
+| 180103020017 | Samia    | Sylhet       | Female |
+| 180103020023 | Tonoya   | Gulapgonj    | Female |
+| 180103020025 | Rejwana  | Sylhet       | Female |
+| 180103020031 | Sonjib   | Sylhet       | Male   |
+| 180103020035 | Fatema   | Jakigonj     | Female |
+| 180103020041 | Abdullah | Beanibazar   | Male   |
+| 180103020043 | Kamrul   | Bishwanath   | Male   |
+| 180103020055 | Abdullah | Chatok       | Male   |
++--------------+----------+--------------+--------+
+13 rows in set (0.00 sec)
+
+mysql> select * from student where address='Sylhet';
++--------------+---------+---------+--------+
+| student_id   | name    | address | gender |
++--------------+---------+---------+--------+
+| 180103020011 | Rudro   | Sylhet  | Male   |
+| 180103020017 | Samia   | Sylhet  | Female |
+| 180103020025 | Rejwana | Sylhet  | Female |
+| 180103020031 | Sonjib  | Sylhet  | Male   |
++--------------+---------+---------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select * from student where address='Sylhet' and gender='Male';
++--------------+--------+---------+--------+
+| student_id   | name   | address | gender |
++--------------+--------+---------+--------+
+| 180103020011 | Rudro  | Sylhet  | Male   |
+| 180103020031 | Sonjib | Sylhet  | Male   |
++--------------+--------+---------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from student where address='Sylhet' and gender='Male' order by student_id desc;
++--------------+--------+---------+--------+
+| student_id   | name   | address | gender |
++--------------+--------+---------+--------+
+| 180103020031 | Sonjib | Sylhet  | Male   |
+| 180103020011 | Rudro  | Sylhet  | Male   |
++--------------+--------+---------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from student where address='Sylhet' and gender='Male' order by 1 desc;
++--------------+--------+---------+--------+
+| student_id   | name   | address | gender |
++--------------+--------+---------+--------+
+| 180103020031 | Sonjib | Sylhet  | Male   |
+| 180103020011 | Rudro  | Sylhet  | Male   |
++--------------+--------+---------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from student where address='Sylhet' and gender='Male' order by 1;
++--------------+--------+---------+--------+
+| student_id   | name   | address | gender |
++--------------+--------+---------+--------+
+| 180103020011 | Rudro  | Sylhet  | Male   |
+| 180103020031 | Sonjib | Sylhet  | Male   |
++--------------+--------+---------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from student where address='Sylhet' and gender='Male' order by 2;
++--------------+--------+---------+--------+
+| student_id   | name   | address | gender |
++--------------+--------+---------+--------+
+| 180103020011 | Rudro  | Sylhet  | Male   |
+| 180103020031 | Sonjib | Sylhet  | Male   |
++--------------+--------+---------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from student order by 1;
++--------------+----------+--------------+--------+
+| student_id   | name     | address      | gender |
++--------------+----------+--------------+--------+
+| 170303020001 | Rimu     | Tangail      | Female |
+| 170303020006 | Rabbi    | Tangail      | Male   |
+| 170303020008 | Marjana  | Gulapgonj    | Female |
+| 180103020005 | Khadija  | Moulovibazar | Female |
+| 180103020011 | Rudro    | Sylhet       | Male   |
+| 180103020017 | Samia    | Sylhet       | Female |
+| 180103020023 | Tonoya   | Gulapgonj    | Female |
+| 180103020025 | Rejwana  | Sylhet       | Female |
+| 180103020031 | Sonjib   | Sylhet       | Male   |
+| 180103020035 | Fatema   | Jakigonj     | Female |
+| 180103020041 | Abdullah | Beanibazar   | Male   |
+| 180103020043 | Kamrul   | Bishwanath   | Male   |
+| 180103020055 | Abdullah | Chatok       | Male   |
++--------------+----------+--------------+--------+
+13 rows in set (0.00 sec)
+
+mysql> select * from student order by 1 desc;
++--------------+----------+--------------+--------+
+| student_id   | name     | address      | gender |
++--------------+----------+--------------+--------+
+| 180103020055 | Abdullah | Chatok       | Male   |
+| 180103020043 | Kamrul   | Bishwanath   | Male   |
+| 180103020041 | Abdullah | Beanibazar   | Male   |
+| 180103020035 | Fatema   | Jakigonj     | Female |
+| 180103020031 | Sonjib   | Sylhet       | Male   |
+| 180103020025 | Rejwana  | Sylhet       | Female |
+| 180103020023 | Tonoya   | Gulapgonj    | Female |
+| 180103020017 | Samia    | Sylhet       | Female |
+| 180103020011 | Rudro    | Sylhet       | Male   |
+| 180103020005 | Khadija  | Moulovibazar | Female |
+| 170303020008 | Marjana  | Gulapgonj    | Female |
+| 170303020006 | Rabbi    | Tangail      | Male   |
+| 170303020001 | Rimu     | Tangail      | Female |
++--------------+----------+--------------+--------+
+13 rows in set (0.00 sec)
+
+mysql> select * from student order by 2 desc;
++--------------+----------+--------------+--------+
+| student_id   | name     | address      | gender |
++--------------+----------+--------------+--------+
+| 180103020023 | Tonoya   | Gulapgonj    | Female |
+| 180103020031 | Sonjib   | Sylhet       | Male   |
+| 180103020017 | Samia    | Sylhet       | Female |
+| 180103020011 | Rudro    | Sylhet       | Male   |
+| 170303020001 | Rimu     | Tangail      | Female |
+| 180103020025 | Rejwana  | Sylhet       | Female |
+| 170303020006 | Rabbi    | Tangail      | Male   |
+| 170303020008 | Marjana  | Gulapgonj    | Female |
+| 180103020005 | Khadija  | Moulovibazar | Female |
+| 180103020043 | Kamrul   | Bishwanath   | Male   |
+| 180103020035 | Fatema   | Jakigonj     | Female |
+| 180103020041 | Abdullah | Beanibazar   | Male   |
+| 180103020055 | Abdullah | Chatok       | Male   |
++--------------+----------+--------------+--------+
+13 rows in set (0.00 sec)
+
+mysql> select * from student order by 2;
++--------------+----------+--------------+--------+
+| student_id   | name     | address      | gender |
++--------------+----------+--------------+--------+
+| 180103020055 | Abdullah | Chatok       | Male   |
+| 180103020041 | Abdullah | Beanibazar   | Male   |
+| 180103020035 | Fatema   | Jakigonj     | Female |
+| 180103020043 | Kamrul   | Bishwanath   | Male   |
+| 180103020005 | Khadija  | Moulovibazar | Female |
+| 170303020008 | Marjana  | Gulapgonj    | Female |
+| 170303020006 | Rabbi    | Tangail      | Male   |
+| 180103020025 | Rejwana  | Sylhet       | Female |
+| 170303020001 | Rimu     | Tangail      | Female |
+| 180103020011 | Rudro    | Sylhet       | Male   |
+| 180103020017 | Samia    | Sylhet       | Female |
+| 180103020031 | Sonjib   | Sylhet       | Male   |
+| 180103020023 | Tonoya   | Gulapgonj    | Female |
++--------------+----------+--------------+--------+
+13 rows in set (0.00 sec)
+
+mysql> select gender, name from student order by name asc;
++--------+----------+
+| gender | name     |
++--------+----------+
+| Male   | Abdullah |
+| Male   | Abdullah |
+| Female | Fatema   |
+| Male   | Kamrul   |
+| Female | Khadija  |
+| Female | Marjana  |
+| Male   | Rabbi    |
+| Female | Rejwana  |
+| Female | Rimu     |
+| Male   | Rudro    |
+| Female | Samia    |
+| Male   | Sonjib   |
+| Female | Tonoya   |
++--------+----------+
+13 rows in set (0.00 sec)
+
+mysql> select gender, name,student_id from student order by name asc;
++--------+----------+--------------+
+| gender | name     | student_id   |
++--------+----------+--------------+
+| Male   | Abdullah | 180103020055 |
+| Male   | Abdullah | 180103020041 |
+| Female | Fatema   | 180103020035 |
+| Male   | Kamrul   | 180103020043 |
+| Female | Khadija  | 180103020005 |
+| Female | Marjana  | 170303020008 |
+| Male   | Rabbi    | 170303020006 |
+| Female | Rejwana  | 180103020025 |
+| Female | Rimu     | 170303020001 |
+| Male   | Rudro    | 180103020011 |
+| Female | Samia    | 180103020017 |
+| Male   | Sonjib   | 180103020031 |
+| Female | Tonoya   | 180103020023 |
++--------+----------+--------------+
+13 rows in set (0.00 sec)
+
+mysql> select distinct name from student order by 1 desc;
++----------+
+| name     |
++----------+
+| Tonoya   |
+| Sonjib   |
+| Samia    |
+| Rudro    |
+| Rimu     |
+| Rejwana  |
+| Rabbi    |
+| Marjana  |
+| Khadija  |
+| Kamrul   |
+| Fatema   |
+| Abdullah |
++----------+
+12 rows in set (0.00 sec)
+
+mysql> select distinct name from student order by 2 desc;
+ERROR 1054 (42S22): Unknown column '2' in 'order clause'
+mysql> select * from student order by 2 desc;
++--------------+----------+--------------+--------+
+| student_id   | name     | address      | gender |
++--------------+----------+--------------+--------+
+| 180103020023 | Tonoya   | Gulapgonj    | Female |
+| 180103020031 | Sonjib   | Sylhet       | Male   |
+| 180103020017 | Samia    | Sylhet       | Female |
+| 180103020011 | Rudro    | Sylhet       | Male   |
+| 170303020001 | Rimu     | Tangail      | Female |
+| 180103020025 | Rejwana  | Sylhet       | Female |
+| 170303020006 | Rabbi    | Tangail      | Male   |
+| 170303020008 | Marjana  | Gulapgonj    | Female |
+| 180103020005 | Khadija  | Moulovibazar | Female |
+| 180103020043 | Kamrul   | Bishwanath   | Male   |
+| 180103020035 | Fatema   | Jakigonj     | Female |
+| 180103020041 | Abdullah | Beanibazar   | Male   |
+| 180103020055 | Abdullah | Chatok       | Male   |
++--------------+----------+--------------+--------+
+13 rows in set (0.00 sec)
+
+mysql> select * from student;
++--------------+----------+--------------+--------+
+| student_id   | name     | address      | gender |
++--------------+----------+--------------+--------+
+| 170303020001 | Rimu     | Tangail      | Female |
+| 170303020006 | Rabbi    | Tangail      | Male   |
+| 170303020008 | Marjana  | Gulapgonj    | Female |
+| 180103020005 | Khadija  | Moulovibazar | Female |
+| 180103020011 | Rudro    | Sylhet       | Male   |
+| 180103020017 | Samia    | Sylhet       | Female |
+| 180103020023 | Tonoya   | Gulapgonj    | Female |
+| 180103020025 | Rejwana  | Sylhet       | Female |
+| 180103020031 | Sonjib   | Sylhet       | Male   |
+| 180103020035 | Fatema   | Jakigonj     | Female |
+| 180103020041 | Abdullah | Beanibazar   | Male   |
+| 180103020043 | Kamrul   | Bishwanath   | Male   |
+| 180103020055 | Abdullah | Chatok       | Male   |
++--------------+----------+--------------+--------+
+13 rows in set (0.00 sec)
+
+mysql> select * from student limit 3,5;
++--------------+---------+--------------+--------+
+| student_id   | name    | address      | gender |
++--------------+---------+--------------+--------+
+| 180103020005 | Khadija | Moulovibazar | Female |
+| 180103020011 | Rudro   | Sylhet       | Male   |
+| 180103020017 | Samia   | Sylhet       | Female |
+| 180103020023 | Tonoya  | Gulapgonj    | Female |
+| 180103020025 | Rejwana | Sylhet       | Female |
++--------------+---------+--------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student order by 2 asc limit 3,5;
++--------------+---------+--------------+--------+
+| student_id   | name    | address      | gender |
++--------------+---------+--------------+--------+
+| 180103020043 | Kamrul  | Bishwanath   | Male   |
+| 180103020005 | Khadija | Moulovibazar | Female |
+| 170303020008 | Marjana | Gulapgonj    | Female |
+| 170303020006 | Rabbi   | Tangail      | Male   |
+| 180103020025 | Rejwana | Sylhet       | Female |
++--------------+---------+--------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student order by 2 asc;
++--------------+----------+--------------+--------+
+| student_id   | name     | address      | gender |
++--------------+----------+--------------+--------+
+| 180103020055 | Abdullah | Chatok       | Male   |
+| 180103020041 | Abdullah | Beanibazar   | Male   |
+| 180103020035 | Fatema   | Jakigonj     | Female |
+| 180103020043 | Kamrul   | Bishwanath   | Male   |
+| 180103020005 | Khadija  | Moulovibazar | Female |
+| 170303020008 | Marjana  | Gulapgonj    | Female |
+| 170303020006 | Rabbi    | Tangail      | Male   |
+| 180103020025 | Rejwana  | Sylhet       | Female |
+| 170303020001 | Rimu     | Tangail      | Female |
+| 180103020011 | Rudro    | Sylhet       | Male   |
+| 180103020017 | Samia    | Sylhet       | Female |
+| 180103020031 | Sonjib   | Sylhet       | Male   |
+| 180103020023 | Tonoya   | Gulapgonj    | Female |
++--------------+----------+--------------+--------+
+13 rows in set (0.00 sec)
+
+mysql> select * from student order by 2 desc limit 3,5;
++--------------+---------+-----------+--------+
+| student_id   | name    | address   | gender |
++--------------+---------+-----------+--------+
+| 180103020011 | Rudro   | Sylhet    | Male   |
+| 170303020001 | Rimu    | Tangail   | Female |
+| 180103020025 | Rejwana | Sylhet    | Female |
+| 170303020006 | Rabbi   | Tangail   | Male   |
+| 170303020008 | Marjana | Gulapgonj | Female |
++--------------+---------+-----------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student order by 2 desc;
++--------------+----------+--------------+--------+
+| student_id   | name     | address      | gender |
++--------------+----------+--------------+--------+
+| 180103020023 | Tonoya   | Gulapgonj    | Female |
+| 180103020031 | Sonjib   | Sylhet       | Male   |
+| 180103020017 | Samia    | Sylhet       | Female |
+| 180103020011 | Rudro    | Sylhet       | Male   |
+| 170303020001 | Rimu     | Tangail      | Female |
+| 180103020025 | Rejwana  | Sylhet       | Female |
+| 170303020006 | Rabbi    | Tangail      | Male   |
+| 170303020008 | Marjana  | Gulapgonj    | Female |
+| 180103020005 | Khadija  | Moulovibazar | Female |
+| 180103020043 | Kamrul   | Bishwanath   | Male   |
+| 180103020035 | Fatema   | Jakigonj     | Female |
+| 180103020041 | Abdullah | Beanibazar   | Male   |
+| 180103020055 | Abdullah | Chatok       | Male   |
++--------------+----------+--------------+--------+
+13 rows in set (0.00 sec)
+
+mysql> select * from student order by 2 desc limit 3,50;
++--------------+----------+--------------+--------+
+| student_id   | name     | address      | gender |
++--------------+----------+--------------+--------+
+| 180103020011 | Rudro    | Sylhet       | Male   |
+| 170303020001 | Rimu     | Tangail      | Female |
+| 180103020025 | Rejwana  | Sylhet       | Female |
+| 170303020006 | Rabbi    | Tangail      | Male   |
+| 170303020008 | Marjana  | Gulapgonj    | Female |
+| 180103020005 | Khadija  | Moulovibazar | Female |
+| 180103020043 | Kamrul   | Bishwanath   | Male   |
+| 180103020035 | Fatema   | Jakigonj     | Female |
+| 180103020041 | Abdullah | Beanibazar   | Male   |
+| 180103020055 | Abdullah | Chatok       | Male   |
++--------------+----------+--------------+--------+
+10 rows in set (0.00 sec)
+
+mysql> select * from student order by 2 desc limit 3;
++--------------+--------+-----------+--------+
+| student_id   | name   | address   | gender |
++--------------+--------+-----------+--------+
+| 180103020023 | Tonoya | Gulapgonj | Female |
+| 180103020031 | Sonjib | Sylhet    | Male   |
+| 180103020017 | Samia  | Sylhet    | Female |
++--------------+--------+-----------+--------+
+3 rows in set (0.00 sec)
+
+mysql> delete from student where student_id=180103020031;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from student;
++--------------+----------+--------------+--------+
+| student_id   | name     | address      | gender |
++--------------+----------+--------------+--------+
+| 170303020001 | Rimu     | Tangail      | Female |
+| 170303020006 | Rabbi    | Tangail      | Male   |
+| 170303020008 | Marjana  | Gulapgonj    | Female |
+| 180103020005 | Khadija  | Moulovibazar | Female |
+| 180103020011 | Rudro    | Sylhet       | Male   |
+| 180103020017 | Samia    | Sylhet       | Female |
+| 180103020023 | Tonoya   | Gulapgonj    | Female |
+| 180103020025 | Rejwana  | Sylhet       | Female |
+| 180103020035 | Fatema   | Jakigonj     | Female |
+| 180103020041 | Abdullah | Beanibazar   | Male   |
+| 180103020043 | Kamrul   | Bishwanath   | Male   |
+| 180103020055 | Abdullah | Chatok       | Male   |
++--------------+----------+--------------+--------+
+12 rows in set (0.00 sec)
+
+mysql> delete from student where name='Abdullah';
+Query OK, 2 rows affected (0.02 sec)
+
+mysql> select * from student;
++--------------+---------+--------------+--------+
+| student_id   | name    | address      | gender |
++--------------+---------+--------------+--------+
+| 170303020001 | Rimu    | Tangail      | Female |
+| 170303020006 | Rabbi   | Tangail      | Male   |
+| 170303020008 | Marjana | Gulapgonj    | Female |
+| 180103020005 | Khadija | Moulovibazar | Female |
+| 180103020011 | Rudro   | Sylhet       | Male   |
+| 180103020017 | Samia   | Sylhet       | Female |
+| 180103020023 | Tonoya  | Gulapgonj    | Female |
+| 180103020025 | Rejwana | Sylhet       | Female |
+| 180103020035 | Fatema  | Jakigonj     | Female |
+| 180103020043 | Kamrul  | Bishwanath   | Male   |
++--------------+---------+--------------+--------+
+10 rows in set (0.00 sec)
+
+mysql> delete from student;
+Query OK, 10 rows affected (0.00 sec)
+
+mysql> select * from student;
+Empty set (0.00 sec)
+
+mysql> insert into student values
+    -> (180103020011,'Rudro','Sylhet','Male'),
+    -> (180103020017,'Samia','Sylhet','Female'),
+    -> (180103020023,'Tonoya','Gulapgonj','Female'),
+    -> (180103020025,'Rejwana','Sylhet','Female'),
+    -> (180103020005,'Khadija','Moulovibazar','Female'),
+    -> (180103020035,'Fatema','Jakigonj','Female'),
+    -> (170303020001,'Rimu','Tangail','Female'),
+    -> (170303020006,'Rabbi','Tangail','Male'),
+    -> (170303020008,'Marjana','Gulapgonj','Female'),
+    -> (180103020043,'Kamrul','Bishwanath','Male'),
+    -> (180103020031,'Sonjib','Sylhet','Male'),
+    -> (180103020041,'Abdullah','Beanibazar','Male'),
+    -> (180103020055,'Abdullah','Chatok','Male');
+Query OK, 13 rows affected (0.00 sec)
+Records: 13  Duplicates: 0  Warnings: 0
+
+mysql> select * from student;
++--------------+----------+--------------+--------+
+| student_id   | name     | address      | gender |
++--------------+----------+--------------+--------+
+| 170303020001 | Rimu     | Tangail      | Female |
+| 170303020006 | Rabbi    | Tangail      | Male   |
+| 170303020008 | Marjana  | Gulapgonj    | Female |
+| 180103020005 | Khadija  | Moulovibazar | Female |
+| 180103020011 | Rudro    | Sylhet       | Male   |
+| 180103020017 | Samia    | Sylhet       | Female |
+| 180103020023 | Tonoya   | Gulapgonj    | Female |
+| 180103020025 | Rejwana  | Sylhet       | Female |
+| 180103020031 | Sonjib   | Sylhet       | Male   |
+| 180103020035 | Fatema   | Jakigonj     | Female |
+| 180103020041 | Abdullah | Beanibazar   | Male   |
+| 180103020043 | Kamrul   | Bishwanath   | Male   |
+| 180103020055 | Abdullah | Chatok       | Male   |
++--------------+----------+--------------+--------+
+13 rows in set (0.00 sec)
+
+mysql> update table set
+    -> ;update table set
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table set' at line 1
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table set' at line 1
+mysql>
+mysql> update student set
+    -> name='Abdullah Al Masud'
+    -> where student_id=180103020055;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from student;
++--------------+-------------------+--------------+--------+
+| student_id   | name              | address      | gender |
++--------------+-------------------+--------------+--------+
+| 170303020001 | Rimu              | Tangail      | Female |
+| 170303020006 | Rabbi             | Tangail      | Male   |
+| 170303020008 | Marjana           | Gulapgonj    | Female |
+| 180103020005 | Khadija           | Moulovibazar | Female |
+| 180103020011 | Rudro             | Sylhet       | Male   |
+| 180103020017 | Samia             | Sylhet       | Female |
+| 180103020023 | Tonoya            | Gulapgonj    | Female |
+| 180103020025 | Rejwana           | Sylhet       | Female |
+| 180103020031 | Sonjib            | Sylhet       | Male   |
+| 180103020035 | Fatema            | Jakigonj     | Female |
+| 180103020041 | Abdullah          | Beanibazar   | Male   |
+| 180103020043 | Kamrul            | Bishwanath   | Male   |
+| 180103020055 | Abdullah Al Masud | Chatok       | Male   |
++--------------+-------------------+--------------+--------+
+13 rows in set (0.00 sec)
+
+mysql> create table course(
+    -> course_code varchar(8) primary key,
+    -> title varchar(80) not null,
+    -> credits float(5,2)not null);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc course;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| course_code | varchar(8)  | NO   | PRI | NULL    |       |
+| title       | varchar(80) | NO   |     | NULL    |       |
+| credits     | float(5,2)  | NO   |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+3 rows in set (0.02 sec)
+
+mysql> insert into course values
+    -> ('CSE 111','Fundamentals of Computers',3.00),
+    -> ('CSE 113','Structure Programming Language',3.00),
+    -> ('CSE 114','Structure Programming Language Lab',1.50),
+    -> ('CSE 211','Object Oriented Programming Language',3.0),
+    -> ('CSE 212','Object Oriented Programming Language Lab',1.5),
+    -> ('CSE 313','Database System',3.0),
+    -> ('CSE 314','Database System Lab',1.5);
+Query OK, 7 rows affected (0.00 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+mysql> select * from course;
++-------------+------------------------------------------+---------+
+| course_code | title                                    | credits |
++-------------+------------------------------------------+---------+
+| CSE 111     | Fundamentals of Computers                |    3.00 |
+| CSE 113     | Structure Programming Language           |    3.00 |
+| CSE 114     | Structure Programming Language Lab       |    1.50 |
+| CSE 211     | Object Oriented Programming Language     |    3.00 |
+| CSE 212     | Object Oriented Programming Language Lab |    1.50 |
+| CSE 313     | Database System                          |    3.00 |
+| CSE 314     | Database System Lab                      |    1.50 |
++-------------+------------------------------------------+---------+
+7 rows in set (0.00 sec)
+
+mysql> desc student;
++------------+-------------------------------+------+-----+-----------+-------+
+| Field      | Type                          | Null | Key | Default   | Extra |
++------------+-------------------------------+------+-----+-----------+-------+
+| student_id | bigint(12)                    | NO   | PRI | 0         |       |
+| name       | varchar(30)                   | NO   | PRI |           |       |
+| address    | varchar(250)                  | YES  |     | Not Given |       |
+| gender     | enum('Male','Female','Other') | NO   |     | NULL      |       |
++------------+-------------------------------+------+-----+-----------+-------+
+4 rows in set (0.02 sec)
+
+mysql> create table course_registration(
+    -> s_id bigint(12),
+    -> c_id varchar(8),
+    -> semester enum('Spring','Summer','Fall') not null,
+    -> s_year year not null,
+    -> constraint st_fk foreign key(s_id) references student(student_id),
+    -> constraint c_fk foreign key(c_id) references course(course_code),
+    -> primary key(s_id,c_id,semester,s_year)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc course_registration;
++----------+--------------------------------+------+-----+---------+-------+
+| Field    | Type                           | Null | Key | Default | Extra |
++----------+--------------------------------+------+-----+---------+-------+
+| s_id     | bigint(12)                     | NO   | PRI | 0       |       |
+| c_id     | varchar(8)                     | NO   | PRI |         |       |
+| semester | enum('Spring','Summer','Fall') | NO   | PRI | NULL    |       |
+| s_year   | year(4)                        | NO   | PRI | NULL    |       |
++----------+--------------------------------+------+-----+---------+-------+
+4 rows in set (0.02 sec)
+
+mysql> insert into course_registration values
+    -> (180103020011,'CSE 111','Fall',2018);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> (180103020011,'CSE 111','Fall',2018);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '180103020011,'CSE 111','Fall',2018)' at line 1
+mysql> (180103020011,'CSE 111','Fall',2019);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '180103020011,'CSE 111','Fall',2019)' at line 1
+mysql> insert into course_registration values
+    -> (180103020011,'CSE 111','Fall',2019);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into course_registration values
+    -> (180103020001,'CSE 111','Fall',2018);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`neub`.`course_registration`, CONSTRAINT `st_fk` FOREIGN KEY (`s_id`) REFERENCES `student` (`student_id`))
+mysql> delete from student where student_id=180103020011;
+ERROR 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`neub`.`course_registration`, CONSTRAINT `st_fk` FOREIGN KEY (`s_id`) REFERENCES `student` (`student_id`))
+mysql> drop table stundent;
+ERROR 1051 (42S02): Unknown table 'neub.stundent'
+mysql> drop table student;
+ERROR 1217 (23000): Cannot delete or update a parent row: a foreign key constraint fails
+mysql> alter table course_registration drop foreign key st_fk;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc course_registration;
++----------+--------------------------------+------+-----+---------+-------+
+| Field    | Type                           | Null | Key | Default | Extra |
++----------+--------------------------------+------+-----+---------+-------+
+| s_id     | bigint(12)                     | NO   | PRI | 0       |       |
+| c_id     | varchar(8)                     | NO   | PRI |         |       |
+| semester | enum('Spring','Summer','Fall') | NO   | PRI | NULL    |       |
+| s_year   | year(4)                        | NO   | PRI | NULL    |       |
++----------+--------------------------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> alter table course_registration drop foreign key c_fk;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table course_registration add constraint st_fk foreign key(s_id) references student(student_id);
+Query OK, 2 rows affected (0.06 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> alter table course_registration add constraint c_fk foreign key(c_id) references course(course_code);
+Query OK, 2 rows affected (0.08 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select sum(credits) from course;
++--------------+
+| sum(credits) |
++--------------+
+|        16.50 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> select avg(credits) from course;
++--------------+
+| avg(credits) |
++--------------+
+|     2.357143 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> select max(credits) from course;
++--------------+
+| max(credits) |
++--------------+
+|         3.00 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> select min(credits) from course;
++--------------+
+| min(credits) |
++--------------+
+|         1.50 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> select count(student_id) from student;
++-------------------+
+| count(student_id) |
++-------------------+
+|                13 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> select count(student_id) from student where name='Abdullah';
++-------------------+
+| count(student_id) |
++-------------------+
+|                 1 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> select count(student_id) from student where gender='MAle';
++-------------------+
+| count(student_id) |
++-------------------+
+|                 6 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> select count(student_id) from student where gender='feMAle';
++-------------------+
+| count(student_id) |
++-------------------+
+|                 7 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> select name,count(student_id) from student where gender='feMAle';
++------+-------------------+
+| name | count(student_id) |
++------+-------------------+
+| Rimu |                 7 |
++------+-------------------+
+1 row in set (0.00 sec)
+
+mysql> select * from student where gender='Female';
++--------------+---------+--------------+--------+
+| student_id   | name    | address      | gender |
++--------------+---------+--------------+--------+
+| 170303020001 | Rimu    | Tangail      | Female |
+| 170303020008 | Marjana | Gulapgonj    | Female |
+| 180103020005 | Khadija | Moulovibazar | Female |
+| 180103020017 | Samia   | Sylhet       | Female |
+| 180103020023 | Tonoya  | Gulapgonj    | Female |
+| 180103020025 | Rejwana | Sylhet       | Female |
+| 180103020035 | Fatema  | Jakigonj     | Female |
++--------------+---------+--------------+--------+
+7 rows in set (0.00 sec)
+
+mysql> select count(student_id) from student where gender='feMAle' limit 2,2;
+Empty set (0.00 sec)
+
+mysql> select * from student where gender='Female';
++--------------+---------+--------------+--------+
+| student_id   | name    | address      | gender |
++--------------+---------+--------------+--------+
+| 170303020001 | Rimu    | Tangail      | Female |
+| 170303020008 | Marjana | Gulapgonj    | Female |
+| 180103020005 | Khadija | Moulovibazar | Female |
+| 180103020017 | Samia   | Sylhet       | Female |
+| 180103020023 | Tonoya  | Gulapgonj    | Female |
+| 180103020025 | Rejwana | Sylhet       | Female |
+| 180103020035 | Fatema  | Jakigonj     | Female |
++--------------+---------+--------------+--------+
+7 rows in set (0.00 sec)
+
+mysql> select * from student;
++--------------+-------------------+--------------+--------+
+| student_id   | name              | address      | gender |
++--------------+-------------------+--------------+--------+
+| 170303020001 | Rimu              | Tangail      | Female |
+| 170303020006 | Rabbi             | Tangail      | Male   |
+| 170303020008 | Marjana           | Gulapgonj    | Female |
+| 180103020005 | Khadija           | Moulovibazar | Female |
+| 180103020011 | Rudro             | Sylhet       | Male   |
+| 180103020017 | Samia             | Sylhet       | Female |
+| 180103020023 | Tonoya            | Gulapgonj    | Female |
+| 180103020025 | Rejwana           | Sylhet       | Female |
+| 180103020031 | Sonjib            | Sylhet       | Male   |
+| 180103020035 | Fatema            | Jakigonj     | Female |
+| 180103020041 | Abdullah          | Beanibazar   | Male   |
+| 180103020043 | Kamrul            | Bishwanath   | Male   |
+| 180103020055 | Abdullah Al Masud | Chatok       | Male   |
++--------------+-------------------+--------------+--------+
+13 rows in set (0.00 sec)
+
+mysql> select count(student_id) from student where gender='feMAle' limit 2;
++-------------------+
+| count(student_id) |
++-------------------+
+|                 7 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> select count(student_id) from student where gender='feMAle';
++-------------------+
+| count(student_id) |
++-------------------+
+|                 7 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> select count(student_id),max(student_id),min(student_id),avg(student_id) from student;
++-------------------+-----------------+-----------------+-------------------+
+| count(student_id) | max(student_id) | min(student_id) | avg(student_id)   |
++-------------------+-----------------+-----------------+-------------------+
+|                13 |    180103020055 |    170303020001 | 177841481561.6154 |
++-------------------+-----------------+-----------------+-------------------+
+1 row in set (0.00 sec)
+
+mysql> select * from student;
++--------------+-------------------+--------------+--------+
+| student_id   | name              | address      | gender |
++--------------+-------------------+--------------+--------+
+| 170303020001 | Rimu              | Tangail      | Female |
+| 170303020006 | Rabbi             | Tangail      | Male   |
+| 170303020008 | Marjana           | Gulapgonj    | Female |
+| 180103020005 | Khadija           | Moulovibazar | Female |
+| 180103020011 | Rudro             | Sylhet       | Male   |
+| 180103020017 | Samia             | Sylhet       | Female |
+| 180103020023 | Tonoya            | Gulapgonj    | Female |
+| 180103020025 | Rejwana           | Sylhet       | Female |
+| 180103020031 | Sonjib            | Sylhet       | Male   |
+| 180103020035 | Fatema            | Jakigonj     | Female |
+| 180103020041 | Abdullah          | Beanibazar   | Male   |
+| 180103020043 | Kamrul            | Bishwanath   | Male   |
+| 180103020055 | Abdullah Al Masud | Chatok       | Male   |
++--------------+-------------------+--------------+--------+
+13 rows in set (0.00 sec)
+
+mysql> mysql> mysql>
+
+------------------------------------------------

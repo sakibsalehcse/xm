@@ -1,0 +1,54 @@
+create table student(
+	student_id bigint(12) primary key,
+	name varchar(30) not null,
+	address varchar(250) default 'Not Given',
+	dob_year year not null,
+	age int(2) check(age>20),
+	gender enum('Male','Female','Other') not null
+);
+	
+	
+create table student(
+	student_id bigint(12) primary key,
+	name varchar(30) not null unique,
+	address varchar(250) default 'Not Given',
+	dob_year year not null,
+	age int(2) unique check(age>20) ,
+	gender enum('Male','Female','Other') not null
+);
+	
+create table student(
+	student_id bigint(12),
+	name varchar(30),
+	address varchar(250) default 'Not Given',
+	dob_year year not null,
+	age int(2) unique check(age>20) ,
+	gender enum('Male','Female','Other') not null,
+	constraint st_pk primary key(student_id, name)
+);
+	
+PRIMARY KEY(column1, column2, column3, ...)
+
+
+CONSTRAINT [constraint_name] [CONSTRAINT](columns,..)
+
+alter table student drop primary key;
+
+https://www.w3schools.com/sql/sql_ref_drop_constraint.asp
+
+
+insert into student values(190103020003,'DEFG','',1990,28,'Male');
+
+insert into student(name) values('ABCD EFGH');
+
+
+
+
+
+
+
+
+
+
+
+		
