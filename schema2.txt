@@ -1,0 +1,47 @@
+
+MariaDB [village_market_management]> desc seller_info;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| s_id     | int(11)     | NO   | PRI | NULL    |       |
+| name     | varchar(50) | NO   |     | NULL    |       |
+| phone    | int(11)     | NO   |     | NULL    |       |
+| table_no | int(11)     | NO   |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+
+
+MariaDB [village_market_management]> desc seller_product;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| p_id      | int(11)     | NO   | PRI | NULL    |       |
+| p_name    | varchar(50) | NO   |     | NULL    |       |
+| seller_id | int(11)     | YES  |     | NULL    |       |
+| quantity  | int(11)     | NO   |     | NULL    |       |
+| price     | int(11)     | NO   |     | NULL    |       |
+| available | int(11)     | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+
+
+MariaDB [village_market_management]> desc customer_info;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| c_id    | int(11)     | NO   | PRI | NULL    |       |
+| c_name  | varchar(50) | NO   |     | NULL    |       |
+| c_phone | int(11)     | NO   |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+
+
+MariaDB [village_market_management]> desc customer_product;
++-----------+-------------------------+------+-----+---------+-------+
+| Field     | Type                    | Null | Key | Default | Extra |
++-----------+-------------------------+------+-----+---------+-------+
+| p_id      | int(11)                 | NO   | PRI | NULL    |       |
+| p_name    | varchar(50)             | NO   |     | NULL    |       |
+| seller_id | int(11)                 | YES  |     | NULL    |       |
+| quantity  | int(11)                 | NO   |     | NULL    |       |
+| price     | int(11)                 | NO   |     | NULL    |       |
+| date      | date                    | YES  |     | NULL    |       |
+| payment   | enum('paid','not paid') | YES  |     | NULL    |       |
++-----------+-------------------------+------+-----+---------+-------+
