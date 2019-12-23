@@ -1,0 +1,31 @@
+create database village_market_management;
+
+seller_information
+create table seller_info(s_id int primary key,
+                         name varchar(50) not null,
+                         phone int not null,
+                         table_no int not null
+);
+create table seller_product(p_id int primary key,
+                            p_name varchar(50) not null,
+                            seller_id int,
+                            quantity int not null,
+                            price int not null
+                            available int
+);
+
+create table customer_info(c_id int primary key,
+                           c_name varchar(50) not null,
+                           c_phone int not null,
+                        
+);
+
+create table customer_product(p_id int primary key,
+                              p_name varchar(50) not null,
+                              seller_id int,
+                              quantity int not null,
+                              price int not null
+			      data date 
+                           
+);
+
